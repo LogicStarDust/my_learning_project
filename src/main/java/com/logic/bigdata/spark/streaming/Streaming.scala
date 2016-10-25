@@ -11,10 +11,10 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 object Streaming {
 
   def main(args: Array[String]): Unit = {
-    val sparkConf=new SparkConf().setAppName("streaming")
-    val streamingContext=new StreamingContext(sparkConf,Seconds(5))
+    val sparkConf = new SparkConf().setAppName("streaming")
+    val streamingContext = new StreamingContext(sparkConf, Seconds(5))
 
-    val lines=streamingContext.socketTextStream("192.168.3.3",6666)
+    val lines = streamingContext.socketTextStream("192.168.3.3", 6666)
 
     lines.print()
 
