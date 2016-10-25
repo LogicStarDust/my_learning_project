@@ -18,8 +18,9 @@ object Hello3 extends App {
     * 2.给bob对象发送Greet(alice),bob给alice发送askName
     * 3.alice给bob发送TellName（alice）
     * 4.bob输出bob的欢迎词和alice的名字
+    * 5.打印结果
     */
-  //  alice ! Greet(bob)
+  alice ! Greet(bob)
   Thread.sleep(1000)
   system.shutdown()
 
