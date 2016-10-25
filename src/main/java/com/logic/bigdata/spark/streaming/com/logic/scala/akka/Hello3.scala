@@ -13,7 +13,7 @@ object Hello3 extends App {
   val bob: ActorRef = system.actorOf(props("Bob", "How are doing"))
   val alice: ActorRef = system.actorOf(props("alice", "Happy to meet you"))
   bob ! Greet(alice)
-  alice ! Greet(bob)
+//  alice ! Greet(bob)
   Thread.sleep(1000)
   system.shutdown()
 
