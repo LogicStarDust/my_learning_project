@@ -1,4 +1,4 @@
-package com.logic.bigdata.spark.streaming.com.logic.scala.akka
+package com.logic.scala.akka
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 
