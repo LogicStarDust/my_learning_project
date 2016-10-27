@@ -20,8 +20,11 @@ object StreamingForKafka {
       "metadata.broker.list" -> brokers, "serializer.class" -> "kafka.serializer.StringEncoder")
 
     val streaming = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](streamingContext, kafkaParams, topics)
-    print("=======")
     streaming.print()
+    streaming.foreachRDD { rdd =>
+      println("one RDD")
+      rdd.foreach(record => println(record._2))
+    }
 
     streamingContext.start()
     streamingContext.awaitTermination()
