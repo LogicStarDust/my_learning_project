@@ -3,7 +3,7 @@ package com.logic.bigdata.spark.streaming
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.kafka.KafkaUtils
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Milliseconds, Seconds, StreamingContext}
 
 /**
   * @author Wang Guodong wangguodong@richinfo.cn
