@@ -21,7 +21,7 @@ object HBaseCRUD {
     val result=table.get(new Get("key1".getBytes))
 
     println(result.size())
-    println(new String(result.getValue("wgd".getBytes,"a".getBytes)))
+    println(new String(result.getValue("wgd".getBytes,"b".getBytes)))
 
 
 

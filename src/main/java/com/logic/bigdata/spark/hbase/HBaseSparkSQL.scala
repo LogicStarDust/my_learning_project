@@ -15,22 +15,21 @@ object HBaseSparkSQL {
     //建立spark streaming输入流
     val conf=new SparkConf().setAppName("test")
     val sc=new SparkContext(conf)
-    var hbaseParams=Map[String,String]()
-    hbaseParams+=("sparksql_table_schema"->"row_key string, a string, b string, c string")
-    hbaseParams+=("hbase_table_name"->"wgd_test")
-    hbaseParams+=("hbase_table_schema"->"(:key , wgd:a , wgd:b , wgd:c )")
-
-//    val sqlContext=new SQLContext(sc)
-//    val hbaseTable=sqlContext.read.format("").options(hbaseParams).load()
-//    hbaseTable.show()
-
     //hbase
-//    val hbaseConfig=HBaseConfiguration.create()
-//    val hbaseContext=new HBaseContext(sc,hbaseConfig)
-//    val scan=new Scan()
-//    val tableName=new TableName()
-//    hbaseContext.hbaseRDD(tableName,scan)
-//    hbaseContext.
+    val hbaseConfig=HBaseConfiguration.create()
+    hbaseConfig.set("hbase.zookeeper.quorum", "server104:2181,server101:2181,server103:2181")
+    hbaseConfig.set("hbase.zookeeper.property.clientPort", "2181")
+    hbaseConfig.set("mapred.task.timeout", "1")
+
+    val hbaseContext=new HBaseContext(sc,hbaseConfig)
+    val scan=new Scan()
+    scan.addFamily("wgd".getBytes)
+    val data=hbaseContext.hbaseRDD(TableName.valueOf("wgd_test"),scan)
+    println(data.count())
+    data.foreach(x=>{
+      println(new String(x._1.get)+":"+new String(x._2.getValue("wgd".getBytes,"a".getBytes)))
+
+    })
 
   }
 
