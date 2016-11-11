@@ -27,7 +27,7 @@ object ScalaKafka {
     println("put ")
     for(i <- 1 to 10){
 
-    product.send(new ProducerRecord[String,String]("test3","wuqian","wuqian"))
+    product.send(new ProducerRecord[String,String]("test3","wuqian","wuqian231323123123"))
     }
     println("end")
     product.close()

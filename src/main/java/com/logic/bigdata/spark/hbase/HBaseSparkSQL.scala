@@ -25,11 +25,12 @@ object HBaseSparkSQL {
     val scan=new Scan()
     scan.addFamily("wgd".getBytes)
     val data=hbaseContext.hbaseRDD(TableName.valueOf("wgd_test"),scan)
+
     println(data.count())
     data.foreach(x=>{
-      println(new String(x._1.get)+":"+new String(x._2.getValue("wgd".getBytes,"a".getBytes)))
-
+    println(new String(x._1.get)+":"+new String(x._2.getValue("wgd".getBytes,"a".getBytes)))
     })
+//    hbaseContext.bulkPut()
 
   }
 
