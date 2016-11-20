@@ -6,7 +6,7 @@ package com.logic.scala.function
 object Test1 {
   def main(args: Array[String]): Unit = {
     def oo(o:Int,t:Int):Boolean={
-      o<t
+      true
     }
     println(isSorted(Array[Int](1, 2, 3, 4),oo))
   }
@@ -14,11 +14,11 @@ object Test1 {
   def isSorted[A](as: Array[A], order: (A, A) => Boolean): Boolean = {
     def sort(rank: Int, ass: Array[A]): Boolean = {
       if (rank == 0) true
-      else if (order(ass(rank-1), ass(rank))) {
+      else if (order(ass(rank), ass(rank - 1))) {
         sort(rank - 1, ass)
       } else false
     }
-    sort(as.length-1, as)
+    sort(1, as)
   }
 
   def formatResult(name: String, n: Int, f: Int => Int) = {
