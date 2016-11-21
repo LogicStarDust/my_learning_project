@@ -1,9 +1,9 @@
-package com.logic.scala.function
+package com.logic.functional.programming.chapter1
 
 /**
   * Created by logic on 2016/11/19.
   */
-object Test1 {
+object Test2_2 {
   def main(args: Array[String]): Unit = {
     def oo(o:Int,t:Int):Boolean={
       true
@@ -21,7 +21,7 @@ object Test1 {
     sort(1, as)
   }
 
-  def formatResult(name: String, n: Int, f: Int => Int) = {
+  def formatResult(name: String, n: Int, f: Int => Int): String = {
     val msg = "the %s of %d is %d"
     msg.format(name, n, f(n))
   }
