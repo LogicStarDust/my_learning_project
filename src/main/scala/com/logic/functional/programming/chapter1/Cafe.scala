@@ -15,6 +15,9 @@ class Cafe {
     val (coffees, charges) = purchases.unzip
     (coffees, charges.reduce((c1, c2) => c1.combine(c2)))
   }
+  def str:String={
+    "cafe"
+  }
 
 }
 
