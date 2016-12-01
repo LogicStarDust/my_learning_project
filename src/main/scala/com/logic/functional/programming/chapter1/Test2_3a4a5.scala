@@ -5,24 +5,62 @@ package com.logic.functional.programming.chapter1
   */
 object Test2_3a4a5 {
   def main(args: Array[String]): Unit = {
-    def add(one:Int,two:Long):BigDecimal={
-      BigDecimal(one)+BigDecimal(two)
+    def add(one: Int, two: Long): BigDecimal = {
+      BigDecimal(one) + BigDecimal(two)
     }
 
-    val cu=curry(add)
-    val value=cu(10)
-    println(value(10))
+    //把add柯里化
+    val g= curry(add)
+    val h = g(10)
+    println(h(10))
+
+    //反柯里化
+    val j=uncurry(g)
+    println(j(1,2))
   }
-  def curry[A, B, C](f: (A, B) => C): A => (B => C)=
-    (a:A)=>{
-      f(a,_)
+
+  /**
+    * 柯里化
+    *
+    * @param f 一个接受A类型和B类型两个参数，返回C类型的函数
+    * @tparam A 泛型
+    * @tparam B 泛型
+    * @tparam C 泛型
+    * @return 一个接受A类型，返回一个函数的函数
+    */
+  def curry[A, B, C](f: (A, B) => C): A => B => C =
+    (a: A) => {
+      (b:B)=>{
+        f(a,b)
+      }
     }
-  def uncurry[A,B,C](f:A=>B=>C):(A,B)=>C=
-    (a:A,b:B)=>{
+
+  /**
+    * 反柯里化
+    *
+    * @param f 一个接受A类型参数返回函数的函数
+    * @tparam A 泛型
+    * @tparam B 泛型
+    * @tparam C 泛型
+    * @return 一个接受A类型和B类型两个参数，返回C类型的函数
+    */
+  def uncurry[A, B, C](f: A => B => C): (A, B) => C =
+    (a: A, b: B) => {
       f(a)(b)
     }
-  def compose[A,B,C](f:B=>C,g:A=>B):A=>C=
-    (a:A)=> {
+
+  /**
+    * 合并两个函数
+    *
+    * @param f 接受B类型，返回C类型函数
+    * @param g 接受A类型，返回B类型函数
+    * @tparam A 泛型
+    * @tparam B 泛型
+    * @tparam C 泛型
+    * @return 接受A类型，返回C类型的函数
+    */
+  def compose[A, B, C](f: B => C, g: A => B): A => C =
+    (a: A) => {
       f(g(a))
     }
 }

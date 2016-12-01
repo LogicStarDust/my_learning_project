@@ -15,6 +15,5 @@ object Reflect {
     val str=cls.getMethod("str")
     //在aa对象上调用aaa方法
     println(str.invoke(aa))
-
   }
 }
