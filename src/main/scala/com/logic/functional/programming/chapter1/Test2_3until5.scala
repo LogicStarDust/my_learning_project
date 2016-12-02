@@ -3,7 +3,7 @@ package com.logic.functional.programming.chapter1
 /**
   * Created by logic on 2016/11/20.
   */
-object Test2_3a4a5 {
+object Test2_3until5 {
   def main(args: Array[String]): Unit = {
     def add(one: Int, two: Long): BigDecimal = {
       BigDecimal(one) + BigDecimal(two)

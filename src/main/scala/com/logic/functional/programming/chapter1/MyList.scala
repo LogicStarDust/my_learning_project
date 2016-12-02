@@ -26,4 +26,3 @@ object MyList {
     if(as.isEmpty) MyNil
     else Cons(as.head,apply(as.tail:_*))
 }
--
