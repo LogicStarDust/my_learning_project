@@ -1,4 +1,4 @@
-package com.logic.functional.programming.chaoter2
+package com.logic.functional.programming.chapter2
 
 /**
   * Created by logic on 2016/11/20.
