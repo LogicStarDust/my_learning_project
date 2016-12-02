@@ -11,7 +11,7 @@ object Test3_1until6 {
     val ml2=MyList(1,MyNil)
     val ml3=MyNil
     val ml4=MyList(MyNil)
-    println(dropWhile(ml)((x:Int)=>x<3))
+    println(dropWhile(ml)(x=>x<3))
   }
 
   def threePointOne: Int = {
