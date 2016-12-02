@@ -1,4 +1,4 @@
-package com.logic.functional.programming.chapter1
+package com.logic.functional.programming.chapter3
 
 /**
   * @author Wang Guodong wangguodong@richinfo.cn

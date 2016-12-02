@@ -1,7 +1,4 @@
-package com.logic.functional.programming.chapter1
-
-import scala.reflect.ClassTag
-import scala.runtime.Nothing$
+package com.logic.functional.programming.chapter3
 
 /**
   * @author Wang Guodong wangguodong@richinfo.cn
