@@ -6,28 +6,26 @@ package com.logic.functional.programming.chapter3
 object Test3_24until29 {
   //3.24
   def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = {
-    def comp[A](sup: MyList[A], sub: MyList[A]): Boolean = sup match {
+    def comp(sup: MyList[A], sub: MyList[A]): Boolean = sup match {
       //当母列表遍历完，发现子列表也结束即为查找到了，否则没找到
       case MyNil => if (sub == MyNil) true else false
       //当发现子列表为空，直接返回true
       case _ if sub == MyNil => true
       //如果发现本节点和子列表的节点相同，去母列表剩下的部分去找子列表剩下的部分
-      case Cons(h, t) => {
+      case Cons(h, t) =>
         if (h == Test3_16until23.head(sub))
           comp(t, Test3_1until6.tail(sub))
         else
           false
-      }
     }
 
     sup match {
       //如果发现本节点和子列表的节点相同，去母列表剩下的部分去找子列表剩下的部分
-      case Cons(h, t) => {
+      case Cons(h, t) =>
         if (h == Test3_16until23.head(sub))
           comp(t, Test3_1until6.tail(sub))
         else
           hasSubsequence(t, sub)
-      }
     }
   }
 
