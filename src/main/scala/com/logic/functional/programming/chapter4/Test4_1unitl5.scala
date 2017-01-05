@@ -1,18 +1,17 @@
 package com.logic.functional.programming.chapter4
 
-import com.logic.functional.programming.chapter4
 
 /**
   * Created by logic on 2016/12/24.
   */
-object Test4 {
+object Test4_1unitl5 {
   def main(args: Array[String]): Unit = {
     //4.1
     val list: List[MyOption[String]] =
-    List(
-      MySome("a"), MySome("b"), MyNone,
-      MySome("d"), MySome("e"), MyNone
-    )
+      List(
+        MySome("a"), MySome("b"), MyNone,
+        MySome("d"), MySome("e"), MyNone
+      )
     val oo: MyOption[MyOption[Int]] = MySome(MySome(23))
     val n: MyOption[Int] = MyNone
     val o: MyOption[Int] = MySome(6)
@@ -28,6 +27,14 @@ object Test4 {
     //4.4
     val list1 = List(MySome(1), MySome(2), MyNone)
     println(sequence(list1))
+
+    val list2 = List(Some(1), Some(2), None)
+    println(list2.flatten)
+    //4.5
+    val list3 = List("1", "2", "s")
+    val tralist = traverse(list3)(x => MySome(x.toInt))
+    println(tralist)
+    Left
   }
 
 
@@ -51,7 +58,18 @@ object Test4 {
 
   //4.4
   def sequence[A](a: List[MyOption[A]]): MyOption[List[A]] = {
-      if (a.contains(MyNone)) MyNone
-      else MySome(a.map(x => x.getOrElse(throw Exception)))
+    Try(a.map(x => x.getOrElse(throw new Exception)))
+  }
+
+  //4.5
+  def traverse[A, B](a: List[A])(f: A => MyOption[B]): MyOption[List[B]] = {
+    Try(a.map(x => f(x).getOrElse(throw new Exception)))
+  }
+
+  def Try[A](a: => A): MyOption[A] = {
+    try MySome(a)
+    catch {
+      case _: Exception => MyNone
+    }
   }
 }
