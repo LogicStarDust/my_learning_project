@@ -1,6 +1,7 @@
 package com.logic.ml.richinfo
 
-import org.apache.spark.mllib.evaluation.{BinaryClassificationMetrics, MulticlassMetrics, RankingMetrics, RegressionMetrics}
+import com.logic.ml.richinfo.evaluation.Evaluation
+import org.apache.spark.mllib.evaluation.RegressionMetrics
 import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rating}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
@@ -34,15 +35,20 @@ object CF {
       })
       .reduceByKey(_ + _).map(line => {
       Rating(line._1._1, line._1._2, line._2)
-      })
+    })
       .randomSplit(Array(0.6, 0.4), 45423L)
-
     val model = ALS.train(data(0), 10, 30)
-    printMSE(data(0), model)
-    printMSE(data(1), model)
+    val eva = new Evaluation(
+      data(1).map(ra=>(ra.user.toString,ra.product.toString,ra.rating)),
+      userid => {
+        val re = model.recommendProducts(userid.toInt, 10)
+        re.map(rating => rating.product.toString)
+      },
+      2000)
+    println(eva)
   }
 
-  def printMSE(ratings: RDD[Rating], model: MatrixFactorizationModel)= {
+  def printMSE(ratings: RDD[Rating], model: MatrixFactorizationModel) = {
     //计算MSE
     val usersProducts = ratings.map(rating => (rating.user, rating.product))
 
@@ -58,8 +64,8 @@ object CF {
 
     val metrics = new RegressionMetrics(joins.map(_._2))
 
-    println("metrics.meanSquaredError="+metrics.meanSquaredError
-      +",metrics.rootMeanSquaredError="+metrics.rootMeanSquaredError
-      +",metrics.meanAbsoluteError="+metrics.meanAbsoluteError)
+    println("metrics.meanSquaredError=" + metrics.meanSquaredError
+      + ",metrics.rootMeanSquaredError=" + metrics.rootMeanSquaredError
+      + ",metrics.meanAbsoluteError=" + metrics.meanAbsoluteError)
   }
 }
