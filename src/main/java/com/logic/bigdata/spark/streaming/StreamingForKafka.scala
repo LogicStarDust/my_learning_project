@@ -15,16 +15,16 @@ object StreamingForKafka {
     val streamingContext = new StreamingContext(conf, Seconds(2))
     // Kafka configurations
     val topics = Set("richinfo")
-    val brokers = "192.168.1.104:9092"
+    val brokers = "192.168.1.103:9092"
     val kafkaParams = Map[String, String](
       "metadata.broker.list" -> brokers, "serializer.class" -> "kafka.serializer.StringEncoder")
 
     val streaming = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](streamingContext, kafkaParams, topics)
     streaming.print()
-    streaming.foreachRDD { rdd =>
-      println("one RDD")
-      rdd.foreach(record => println(record._2))
-    }
+//    streaming.foreachRDD { rdd =>
+//      println("one RDD")
+//      rdd.foreach(record => println(record._2))
+//    }
 
     streamingContext.start()
     streamingContext.awaitTermination()
