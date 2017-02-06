@@ -3,7 +3,7 @@ package com.logic.bigdata.spark.streaming
 import kafka.serializer.StringDecoder
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.kafka.KafkaUtils
-import org.apache.spark.streaming.{Milliseconds, Seconds, StreamingContext}
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
   * @author Wang Guodong wangguodong@richinfo.cn
@@ -17,7 +17,7 @@ object StreamingForKafka {
     val topics = Set("richinfo")
     val brokers = "192.168.1.103:9092"
     val kafkaParams = Map[String, String](
-      "metadata.broker.list" -> brokers, "serializer.class" -> "kafka.serializer.StringEncoder")
+      "metadata.broker.list" -> brokers)
 
     val streaming = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](streamingContext, kafkaParams, topics)
     streaming.print()
