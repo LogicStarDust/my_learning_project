@@ -14,15 +14,16 @@ object CF {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("CF")
     val sc = new SparkContext(conf)
-    val source: RDD[Option[Rating]] = sc.textFile("d:/part-00000")
-      .map(line => {
-        val lines = line.split("&")
-        try {
-          Some(Rating(lines(0).toInt, lines(1).toInt, 1.0.toFloat))
-        } catch {
-          case _: Throwable => None
-        }
-      })
+//    val source: RDD[Option[Rating]] = sc.textFile("d:/part-00001")
+//      .map(line => {
+//        val lines = line.split("&")
+//        try {
+//          Some(Rating(lines(0).toInt, lines(1).toInt, 1.0.toFloat))
+//        } catch {
+//          case _: Throwable => None
+//        }
+//      })
+    val source=getSparkALSData(sc)
     val data = source.filter({
       case None => false
       case Some(_) => true
@@ -35,17 +36,36 @@ object CF {
       })
       .reduceByKey(_ + _).map(line => {
       Rating(line._1._1, line._1._2, line._2)
-    })
+    }).cache()
       .randomSplit(Array(0.6, 0.4), 45423L)
-    val model = ALS.train(data(0), 10, 30)
-    val eva = new Evaluation(
-      data(1).map(ra=>(ra.user.toString,ra.product.toString,ra.rating)),
-      userid => {
-        val re = model.recommendProducts(userid.toInt, 10)
-        re.map(rating => rating.product.toString)
-      },
-      2000)
+    val model = ALS.train(data(0).cache(), 10, 20)
+    printMSE(data(1), model)
+    val pros = model.recommendProductsForUsers(10).cache()
+    val ceshi = data(1).map(rating => {
+      (rating.user.toString, rating.product.toString)
+    }).cache()
+    val pre = pros.map(user => {
+      (user._1.toString, user._2.map(_.product.toString).toIterable)
+    }).cache()
+
+    val eva = new Evaluation(ceshi, pre, 2000)
     println(eva)
+    val ceshi2 = data(0).map(rating => {
+      (rating.user.toString, rating.product.toString)
+    }).cache()
+    val eva2=new Evaluation(ceshi2,pre,2000)
+    println(eva2)
+  }
+  def getSparkALSData(sc:SparkContext): RDD[Option[Rating]] ={
+    val data=sc.textFile("D:/spark-branch-1.5/data/mllib/als/sample_movielens_ratings.txt").map(line=>{
+      val datas=line.split("::")
+      try{
+        Some(Rating(datas(0).toInt,datas(1).toInt,datas(2).toDouble))
+      }catch {
+        case _: Throwable =>None
+      }
+    })
+    data
   }
 
   def printMSE(ratings: RDD[Rating], model: MatrixFactorizationModel) = {

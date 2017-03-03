@@ -21,10 +21,10 @@ object StreamingForKafka {
 
     val streaming = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](streamingContext, kafkaParams, topics)
     streaming.print()
-//    streaming.foreachRDD { rdd =>
-//      println("one RDD")
-//      rdd.foreach(record => println(record._2))
-//    }
+    //    streaming.foreachRDD { rdd =>
+    //      println("one RDD")
+    //      rdd.foreach(record => println(record._2))
+    //    }
 
     streamingContext.start()
     streamingContext.awaitTermination()
