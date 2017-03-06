@@ -14,9 +14,9 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.richinfo.se.help.ResourcesUtil;
 import scala.Tuple2;
 import scala.Tuple3;
+import se.help.ResourcesUtil;
 
 import java.io.IOException;
 import java.util.*;
