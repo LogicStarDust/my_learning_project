@@ -1,6 +1,5 @@
 package se.redis.util;
 
-import org.richinfo.se.redis.util.help.SerializeTranscoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPoolConfig;
@@ -10,6 +9,7 @@ import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
+import se.redis.util.help.SerializeTranscoder;
 
 import java.io.IOException;
 import java.io.InputStream;
