@@ -1,14 +1,18 @@
 package com.logic.ml.mllib
 
-import org.apache.spark.mllib.linalg.Matrices
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.mllib.random.RandomRDDs._
+
 
 /**
   * @author Wang Guodong wangguodong@richinfo.cn
   */
 object MllibeDataStructure {
   def main(args: Array[String]): Unit = {
-    val matrix=Matrices.sparse(3,2,Array(0,1,3),Array(0,2,1),Array(9,6,8))
-    println(matrix)
+    val conf=new SparkConf().setAppName("test").setMaster("local")
+    val sc=new SparkContext(conf)
+    val u=normalRDD(sc,1000L,10).map(x=>1.0+x*2.0)
+    u.take(10).foreach(println)
   }
 
 }
