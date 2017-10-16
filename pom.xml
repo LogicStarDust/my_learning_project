@@ -26,6 +26,21 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>org.apache.oozie</groupId>
+            <artifactId>oozie-client</artifactId>
+            <version>4.1.0-cdh5.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.uaparser</groupId>
+            <artifactId>uap-scala_2.10</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richinfo.se</groupId>
+            <artifactId>se-common-usertransforms</artifactId>
+            <version>0.0.3-RELEASES</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.10</artifactId>
             <version>1.6.0-cdh5.8.0</version>
@@ -161,37 +176,37 @@
         </resources>
         <!--用插件把org.apache.http映射为org.shaded.apache.http解决兼容问题-->
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.apache.http</pattern>
-                                    <shadedPattern>org.shaded.apache.http</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-shade-plugin</artifactId>-->
+                <!--<version>2.3</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>shade</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<relocations>-->
+                                <!--<relocation>-->
+                                    <!--<pattern>org.apache.http</pattern>-->
+                                    <!--<shadedPattern>org.shaded.apache.http</shadedPattern>-->
+                                <!--</relocation>-->
+                            <!--</relocations>-->
+                            <!--<filters>-->
+                                <!--<filter>-->
+                                    <!--<artifact>*:*</artifact>-->
+                                    <!--<excludes>-->
+                                        <!--<exclude>META-INF/*.SF</exclude>-->
+                                        <!--<exclude>META-INF/*.DSA</exclude>-->
+                                        <!--<exclude>META-INF/*.RSA</exclude>-->
+                                    <!--</excludes>-->
+                                <!--</filter>-->
+                            <!--</filters>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <!--java编译插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
