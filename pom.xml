@@ -25,6 +25,16 @@
         </repository>
     </repositories>
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.oozie</groupId>-->
+            <!--<artifactId>oozie-examples</artifactId>-->
+            <!--<version>4.1.0-cdh5.8.0</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.richinfo</groupId>
+            <artifactId>se-util-jobdispatcher</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.oozie</groupId>
             <artifactId>oozie-client</artifactId>
@@ -102,7 +112,11 @@
             <artifactId>scopt_2.10</artifactId>
             <version>3.3.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.scalaj</groupId>
+            <artifactId>scalaj-http_2.10</artifactId>
+            <version>2.3.0</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
