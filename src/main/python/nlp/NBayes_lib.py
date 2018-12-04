@@ -3,7 +3,7 @@ import numpy as np
 
 def loadDataSet():
     postingList = [
-        ['我', '爱', '娇娇'],
+        ['我', '爱', '娇娇',"娇娇","好"],
         ['今天', '天气', '好'],
         ['天下', '第一', '剑客', '李白']
     ]
@@ -31,7 +31,11 @@ class NBays(object):
         [tempset.add(word) for doc in trainset for word in doc]
         self.vocabulary = list(tempset)
         self.vocablen = len(self.vocabulary)
+        print("[完成]\t{}".format("[训练数据的词典和类别词典记录]"))
+        print("--"+str(self.vocabulary).decode("string_escape"))
+        print("[开始]\t{}".format("[计算tf-idf]"))
         self.calc_wordfreq(trainset)    # 计算词频数据集
+        print("[完成]\t{}".format("[计算tf-idf]"))
         self.build_tdm()
 
     def cate_prob(self, classVec):
@@ -43,21 +47,27 @@ class NBays(object):
                 self.labels.count(labeltemp))/float(len(self.labels))
 
     def calc_wordfreq(self, trainset):
+        print("--idf tf 置零初始化")
         self.idf = np.zeros([1, self.vocablen])
         self.tf = np.zeros([self.doclength, self.vocablen])
         for indx in xrange(self.doclength):
+            print("----idf tf 计算，第{}个doc".format(indx))
             for word in trainset[indx]:
                 self.tf[indx, self.vocabulary.index(word)] += 1
             for signleword in set(trainset[indx]):
                 self.idf[0, self.vocabulary.index(signleword)] += 1
 
     def build_tdm(self):
+        print("[开始]\t{}".format("[计算tdm]"))
         self.tdm = np.zeros([len(self.Pcates), self.vocablen])
         sumlist = np.zeros([len(self.Pcates), 1])
+        print("--tdm 初始化零")
         for indx in xrange(self.doclength):
+            print("----提取tf,indx:"+str(indx))
             self.tdm[self.labels[indx]] += self.tf[indx]
             sumlist[self.labels[indx]] = np.sum(self.tdm[self.labels[indx]])
         self.tdm = self.tdm/sumlist
+        print("--每个词本类文档的总tf比上本类文档总词数，为P(x|yi)")
 
     def map2vocab(self, testdata):
         self.testset = np.zeros([1, self.vocablen])
@@ -70,7 +80,10 @@ class NBays(object):
             exit(0)
         predvalue = 0
         predclass = ""
+        print(testset)
+        
         for tdm_vect, keyclass in zip(self.tdm,self.Pcates):
+            print(self.Pcates[keyclass])
             temp = np.sum(testset*tdm_vect*self.Pcates[keyclass])
             if temp > predvalue:
                 predvalue = temp
