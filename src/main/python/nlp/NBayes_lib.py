@@ -80,7 +80,7 @@ class NBays(object):
     def calc_tfidf(self, trainset):
         self.idf = np.zeros([1, self.vocablen])
         self.tf = np.zeros([self.doclength, self.vocablen])
-        for indx in xrange(self.diclength):
+        for indx in xrange(self.doclength):
             for word in trainset[indx]:
                 self.tf[indx, self.vocabulary.index(word)] += 1
             self.tf[indx] = self.tf[indx]/float(len(trainset[indx]))
