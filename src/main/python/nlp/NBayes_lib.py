@@ -87,4 +87,4 @@ class NBays(object):
             for signleword in set(trainset[indx]):
                 self.idf[0, self.vocabulary.index(signleword)] += 1
         self.idf = np.log(float(self.doclength)/self.idf)
-        self.tf = np.mutiply(self.tf, self.idf)
+        self.tf = np.multiply(self.tf, self.idf)
