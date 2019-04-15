@@ -30,11 +30,11 @@
             <!--<artifactId>oozie-examples</artifactId>-->
             <!--<version>4.1.0-cdh5.8.0</version>-->
         <!--</dependency>-->
-        <dependency>
-            <groupId>org.richinfo</groupId>
-            <artifactId>se-util-jobdispatcher</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.richinfo</groupId>-->
+            <!--<artifactId>se-util-jobdispatcher</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.oozie</groupId>
             <artifactId>oozie-client</artifactId>
@@ -45,11 +45,11 @@
             <artifactId>uap-scala_2.10</artifactId>
             <version>0.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.richinfo.se</groupId>
-            <artifactId>se-common-usertransforms</artifactId>
-            <version>0.0.3-RELEASES</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.richinfo.se</groupId>-->
+            <!--<artifactId>se-common-usertransforms</artifactId>-->
+            <!--<version>0.0.3-RELEASES</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.10</artifactId>
