@@ -28,7 +28,7 @@
 
 * 获取  
     命令示例：`docker pull registry.api.weibo.com/dingzk/docker-web`  
-    命令解释：docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]
+    命令解释：`docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]`
 * 运行  
     命令示例：`docker run -it --rm ubuntu:18.04 bash`  
     命令解释：-it 代表交互终端模式，--rm 代表退出容器后销毁
@@ -65,3 +65,63 @@
     `docker image rm [选项] <镜像1> [<镜像2> ...]`  
     命令中的`<镜像>`可以是镜像短id、长id、镜像名或者镜像摘要。id只需要取能够区分镜像的前n位即可。如命令：`docker image rm 501`，删除501开头的本地镜像。  
     注意，本命令可以和`ls`命令相结合，批量删除镜像：`docker image rm $(docker image ls -q redis)`
+
+### 5.4 定制镜像(commit)
+
+* 命令  
+
+    ```bash
+    $docker commit
+        --author "Tao Wang <twang2218@gmail.com>" \
+        --message "修改了默认网页" \
+        webserver \
+        nginx:v2
+    sha256:07e33465974800ce65751acc279adc6ed2dc5ed4e0838f8b86f0c87aa1795214
+    ```
+
+    核心就是commit命令，先使用run把容器启动起来，然后进入容器，修改内部文件后使用commit命令就会把修改后的容器生成一个定制镜像，定制镜像包含修改内容。  
+    注意：不建议使用commit定制镜像在实际线上使用。因为是黑箱操作，依赖每次修改后人工维护修改内容。一旦修改未记录，时间长了以后，将很难还原修改的目的。
+
+### 5.5 定制镜像(Dockerfile)
+
+Dockerfile是一个文本文件，其中包含一条条指令(instruction),每条指令构建一层，因此每一条指令的内容就是描述该层如何构建。
+
+* FROM命令  
+    FROM制定需要的镜像基础，一般使用库里直接封装好的镜像作为基础镜像。docker另外提供一个空白镜像：scratch，如果以此为基础，即表示直接以下面的指令作为第一层镜像。
+* RUN命令  
+    RUN命令有两种格式：  
+  * shell格式：
+
+    ```Dockerfile
+    RUN echo '<h1>Hello, Docker!</h1>' > /usr/share/nginx/html/index.html
+    ```
+
+    注意:如果你在指定玩基础镜像后，进行了若干命令(比如安装三个软件)，请不要使用多个RUN，这样会导致生成很多层，尽量在一层也就是一个RUN中使用`&&`串联多个命令。另外，构建完毕，请删除无关的文件，减少镜像臃肿。
+  * exec格式：  
+    `RUN ["可执行文件", "参数1", "参数2"]`，这更像是函数调用中的格式。
+
+* build命令  
+    执行`docker build`来构建镜像，如`docker build -t nginx:v3 .`表示构建tag为v3的nginx镜像。
+
+  * 镜像构建的上下文  
+        注意build命令`docker build -t nginx:v3 .`最后的"."，表示当前目录，是在指定上下文路径。  
+        我们执行docker命令，均不是在本机执行的，而是通过本机的Docker Remote API执行在Docker引擎上的。而执行`docker build`命令的时候，会把上下文路径打包，上传给Docker引擎。在Docekrfile中如果执行COPY命令，针对的即是上下文路径。
+* 其他命令
+  * copy：复杂文件
+  * add：添加文件
+  * cmd：执行命令
+  * entrypoint：执行命令，支持启动镜像的时候传参数到这个命令
+  * env：设置环境变量
+  * arg：设置环境变量，但是在容器运行时是不存在的，可以在启动镜像的时候覆盖
+  * volume:挂载卷
+  * expose:声明暴露端口，注意是声明
+  * workdir:切换当前目录，注意RUN后面跟随cd命令，对下一个RUN来说，还是cd前的目录
+  * user:指定当前用户
+  * healthcheck:健康检查
+  * onbuild:可以指定，当且仅当本镜像作为基础镜像的时候执行的命令。
+
+### 5.6 构建镜像
+
+* 全部放入Dockerfile：把所有的构建过程写到一个Dockerfile文件中
+* 分散多个Dockerfile：例如，一个镜像复杂构建个编译程序，一个镜像复杂运行服务。第一个构建和编译完成后可以删除掉。大大减少最终镜像的大小
+* 多阶段构建：v17.5以上支持

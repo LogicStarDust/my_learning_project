@@ -1,20 +1,12 @@
-import math
-xArr = [10, 1000, 10000, 20000, 40000, 50000]
+# coding=utf-8
+from pyspark import SparkContext as sc
+from pyspark import SparkConf
+from pyspark.ml.linalg import Vectors
 
+conf = SparkConf().setAppName("guodongA").setMaster("local[*]")
+sc = sc.getOrCreate(conf=conf)
 
-def sigmod(x):
-    return 1/(math.exp(-x)+1)
-
-def fun1(x):
-    x=float(x)
-    p2=1/math.log(x)-1.2
-    if(p2>0):
-        y=1/(x+math.exp(3+math.log(p2)))
-    else:
-        y=1/(x+math.exp(3+math.log(-p2)))
-    return y*100
-
-for i in xArr:
-    x1=fun1(i)
-    y3=sigmod(x1)
-    print("%s\t%s\t%s" % (i,x1, y3))
+data = [1, 2, 3, 4, 5]
+distData = sc.parallelize(data)
+l=distData.count()
+print(l)
