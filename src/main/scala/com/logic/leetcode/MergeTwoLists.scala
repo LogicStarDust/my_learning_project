@@ -18,7 +18,7 @@ object MergeTwoLists {
 
 
   def main(args: Array[String]): Unit = {
-    val n=ListNode()
+    val n = ListNode()
     val n1 = ListNode(4)
     val n2 = ListNode(2)
     n2.next = n1
@@ -38,7 +38,24 @@ object MergeTwoLists {
   }
 
   def mergeTwoLists(l1: ListNode, l2: ListNode): ListNode = {
-    if (l1==null && l2==null){
+    if (l1 == null && l2 == null) {
+      null
+    } else if (l1 == null) {
+      l2
+    } else if (l2 == null) {
+      l1
+    } else if (l1.x < l2.x) {
+      l1.next = mergeTwoLists(l1.next, l2)
+      l1
+    } else {
+      l2.next = mergeTwoLists(l1, l2.next)
+      l2
+    }
+  }
+
+
+  def mergeTwoLists2(l1: ListNode, l2: ListNode): ListNode = {
+    if (l1 == null && l2 == null) {
       null
     } else if (l1 == null && l2 != null) {
       l2
@@ -60,11 +77,11 @@ object MergeTwoLists {
         // println(s"a1:${a1.x},a2:${a2.x}")
         if (a1.x < a2.x) {
           tail.next = a1
-          tail=a1
+          tail = a1
           a1 = a1.next
         } else {
           tail.next = a2
-          tail=a2
+          tail = a2
           a2 = a2.next
         }
       }
