@@ -4,9 +4,9 @@ import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
 import org.apache.hadoop.hbase.client.Scan
 import org.apache.hadoop.hbase.spark.HBaseContext
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.SQLContext
+//import org.apache.spark.sql.SQLContext
 
-import scala.collection.JavaConversions._
+//import scala.collection.JavaConversions._
 /**
   * @author Wang Guodong wangguodong@richinfo.cn
   */

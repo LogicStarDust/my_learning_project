@@ -29,7 +29,7 @@ object OozieScalaTest {
 
     // print the final status o the workflow job
     println("Workflow job completed ...")
-    println(wf.getJobInfo(jobId))
+//    println(wf.getJobInfo(jobId))
   }
 
 }

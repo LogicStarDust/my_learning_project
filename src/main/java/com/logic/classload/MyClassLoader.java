@@ -68,6 +68,7 @@ public class MyClassLoader extends ClassLoader {
     @CallerSensitive
     public static void main(String[] args) {
         MyClassLoader loader1 = new MyClassLoader("loader1");
+        System.out.println("========="+loader1);
         loader1.setPath("d:\\app\\");
         try {
             test(loader1);

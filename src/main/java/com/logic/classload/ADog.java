@@ -35,6 +35,7 @@ public class ADog {
         System.out.println("Cus gets Property of System set by user: " + System.getProperty("test"));
         System.out.println(Thread.currentThread().getContextClassLoader() + "： ADog ContextClassLoader 开始");
         MyClassLoader loader = new MyClassLoader("loader1");
+        System.out.println("=======a"+loader);
         loader.setPath("D:\\app\\");
 
         Thread.currentThread().setContextClassLoader(loader);
